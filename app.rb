@@ -34,10 +34,12 @@ class Scrapper
     data = []
     links.each do |link|
       @browser.goto link
-      title = @browser.h3(class: 'title').text
-      yes = @browser.elements(class: 'fa-check').count
-      no = @browser.elements(class: 'fa-times').count
-      data << { title: title, yes: yes.to_f, no: no.to_f }
+      if @browser.table.exist?
+        title = @browser.h3(class: 'title').text
+        yes = @browser.elements(class: 'fa-check').count
+        no = @browser.elements(class: 'fa-times').count
+        data << { title: title, yes: yes.to_f, no: no.to_f }
+      end
     end
     data
   end
